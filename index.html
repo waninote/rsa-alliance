@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Right Staff Alliance</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B1A;
+    --pink: #E8317A;
+    --purple: #7B2FBE;
+    --dark-purple: #2D1B4E;
+    --deep: #0D0618;
+    --white: #F5F0FF;
+    --muted: rgba(245,240,255,0.55);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── STAR FIELD ── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 12% 8%, rgba(255,255,255,.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 28% 22%, rgba(255,255,255,.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 5%, rgba(255,255,255,.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 15%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 45%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 55%, rgba(255,255,255,.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 70%, rgba(255,255,255,.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 85%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 95%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 95% 60%, rgba(255,255,255,.9) 0%, transparent 100%);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem 4rem;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 60%, rgba(123,47,190,.35) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 30% 80%, rgba(232,49,122,.2) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 70% 20%, rgba(255,107,26,.15) 0%, transparent 60%);
+  }
+
+  .logo-wrap {
+    width: 80px; height: 80px; margin-bottom: 1.5rem;
+    animation: float 4s ease-in-out infinite;
+  }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .hero-title {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: .04em;
+    margin-bottom: .5rem;
+    background: linear-gradient(135deg, var(--orange), var(--pink), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-tagline {
+    font-size: clamp(1.3rem, 6vw, 2rem);
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    font-size: .95rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: .7rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: .1em;
+    padding: .3rem .8rem;
+    border: 1px solid rgba(255,107,26,.5);
+    border-radius: 2rem;
+    color: var(--orange);
+    margin-bottom: 2.5rem;
+  }
+
+  .scroll-hint {
+    font-size: .75rem;
+    color: var(--muted);
+    letter-spacing: .15em;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative; z-index: 1;
+    padding: 3rem 1.5rem;
+    max-width: 680px; margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .2em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+  }
+
+  p { color: var(--muted); margin-bottom: 1rem; font-size: .95rem; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    position: relative; z-index: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--purple), var(--pink), transparent);
+    margin: 0 1.5rem;
+  }
+
+  /* ── CARDS ── */
+  .cards { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+
+  .card {
+    border-radius: 12px;
+    padding: 1.4rem;
+    border: 1px solid rgba(123,47,190,.4);
+    background: rgba(123,47,190,.08);
+    backdrop-filter: blur(4px);
+  }
+  .card.orange { border-color: rgba(255,107,26,.4); background: rgba(255,107,26,.07); }
+  .card.pink   { border-color: rgba(232,49,122,.4); background: rgba(232,49,122,.07); }
+
+  .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .15em;
+    padding: .2rem .6rem;
+    border-radius: 2rem;
+    display: inline-block;
+    margin-bottom: .7rem;
+    background: var(--orange); color: #fff;
+    text-transform: uppercase;
+  }
+  .card-label.purple { background: var(--purple); }
+
+  .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+  .card p  { font-size: .88rem; color: var(--muted); margin: 0; }
+
+  /* ── ICONS ROW ── */
+  .icon-row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .icon-card {
+    flex: 1; min-width: 140px;
+    border-radius: 12px;
+    padding: 1.2rem 1rem;
+    border: 1px solid rgba(245,240,255,.1);
+    background: rgba(255,255,255,.04);
+    text-align: center;
+  }
+  .icon-card .icon { font-size: 1.8rem; margin-bottom: .5rem; }
+  .icon-card .label { font-size: .8rem; font-weight: 700; margin-bottom: .3rem; }
+  .icon-card p { font-size: .75rem; color: var(--muted); margin: 0; }
+
+  /* ── MEMBERS ── */
+  .member-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+
+  .member-card {
+    border-radius: 12px;
+    padding: 1.4rem;
+    border: 1px solid rgba(245,240,255,.1);
+    background: rgba(255,255,255,.04);
+  }
+  .member-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .4rem;
+  }
+  .member-name { font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; }
+  .member-desc { font-size: .85rem; color: var(--muted); margin: 0; }
+  .member-fee {
+    display: inline-block;
+    margin-top: .8rem;
+    padding: .3rem .9rem;
+    border-radius: 2rem;
+    font-size: .78rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--orange), var(--pink));
+    color: #fff;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { margin-top: 1.5rem; position: relative; padding-left: 1.5rem; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--orange), var(--pink), var(--purple));
+  }
+  .tl-item { position: relative; margin-bottom: 1.5rem; }
+  .tl-dot {
+    position: absolute; left: -1.5rem; top: 5px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--orange);
+    border: 2px solid var(--deep);
+  }
+  .tl-date {
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    color: var(--orange);
+    margin-bottom: .2rem;
+  }
+  .tl-title { font-size: .95rem; font-weight: 700; margin-bottom: .2rem; }
+  .tl-desc { font-size: .82rem; color: var(--muted); margin: 0; }
+
+  /* ── CTA ── */
+  .cta-section {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 3rem 1.5rem 5rem;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 80%, rgba(232,49,122,.2) 0%, transparent 70%);
+  }
+
+  .cta-title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+  .cta-sub { font-size: .9rem; color: var(--muted); margin-bottom: 2rem; }
+
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.2rem;
+    border-radius: 3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--orange), var(--pink));
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(232,49,122,.4);
+    transition: transform .2s, box-shadow .2s;
+    letter-spacing: .05em;
+  }
+  .btn:active { transform: scale(.97); }
+
+  .cta-note { font-size: .78rem; color: var(--muted); margin-top: 1.2rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(245,240,255,.08);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-size: .78rem;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="logo-wrap">
+    <img src="logo.png" alt="The Right Staff Alliance ロゴ">
+  </div>
+  <div class="hero-title">The Right Staff Alliance</div>
+  <div class="hero-tagline">集まれば、<br>できることが変わる。</div>
+  <div class="hero-sub">ひとり事務所に、仲間の知恵を。</div>
+  <div class="badge">PROFESSIONAL COMMUNITY FOR ADMINISTRATIVE SCRIVENERS</div>
+  <div class="scroll-hint">▼ スクロールして詳しく見る</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHY -->
+<section class="fade-in">
+  <div class="section-label">Why we started</div>
+  <h2>なぜ、このアライアンスを立ち上げるのか</h2>
+  <p>行政書士として独立しても、「ひとりで抱える」時代は終わりにしたい。過去の挑戦から学び、今回は仕組みで継続させます。</p>
+  <div class="cards">
+    <div class="card orange">
+      <div class="card-label">過去の教訓</div>
+      <h3>QC学会という挑戦</h3>
+      <p>初期の熱量が続かず、少人数ゆえに欠席が致命的に。直接の業務価値に繋がりにくく、新メンバーの補充もなかった。</p>
+    </div>
+    <div class="card pink">
+      <div class="card-label purple">今回の設計</div>
+      <h3>構造で解決する</h3>
+      <p>毎年のアソシエイト補充・非同期インフラ・実務連携という業務価値・スクール→卒業の成長構造で継続させる。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ENV -->
+<section class="fade-in">
+  <div class="section-label">Environment</div>
+  <h2>行政書士を取り巻く環境の変化</h2>
+  <div class="icon-row">
+    <div class="icon-card">
+      <div class="icon">📱</div>
+      <div class="label">Gビズポータル</div>
+      <p>電子ロッカー機能により書類収集・転記作業の価値が急速に低下</p>
+    </div>
+    <div class="icon-card">
+      <div class="icon">⚖️</div>
+      <div class="label">残る価値</div>
+      <p>「判断」と「責任」へ。プロフェッションとしての価値を明確にすることが急務</p>
+    </div>
+    <div class="icon-card">
+      <div class="icon">🏢</div>
+      <div class="label">ひとり事務所の限界</div>
+      <p>受任数と利益のバランス。ひとりで抱えることの限界は共通の課題</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMBERS -->
+<section class="fade-in">
+  <div class="section-label">Membership</div>
+  <h2>3つのメンバー区分</h2>
+  <div class="member-grid">
+    <div class="member-card">
+      <div class="member-tag">ASSOCIATE / スクール生</div>
+      <div class="member-name">アソシエイト</div>
+      <div class="member-desc">開業まもない行政書士として入会。フェローの実務を手伝いながら書式・ノウハウを学び、プロフェッションへの道を歩む。</div>
+      <div class="member-fee">参加費：無料</div>
+    </div>
+    <div class="member-card">
+      <div class="member-tag">LAUNCH FELLOW / 創設メンバー</div>
+      <div class="member-name">ローンチフェロー</div>
+      <div class="member-desc">理念に賛同する経験豊富な行政書士として参画。知識・ノウハウの提供者として、アライアンスの土台を作る。</div>
+      <div class="member-fee">初期：無料</div>
+    </div>
+    <div class="member-card">
+      <div class="member-tag">FELLOW / 卒業生メンバー</div>
+      <div class="member-name">フェロー</div>
+      <div class="member-desc">プロフェッションとしての自覚が育ったアソシエイトが卒業。対等な知識共有の担い手として、次世代を育てる立場へ。</div>
+      <div class="member-fee">年会費：実費のみ</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ACTIVITIES -->
+<section class="fade-in">
+  <div class="section-label">Activities</div>
+  <h2>主な活動内容</h2>
+  <div class="icon-row">
+    <div class="icon-card">
+      <div class="icon">📁</div>
+      <div class="label">共有資料ライブラリ</div>
+      <p>ヒアリングシート・書式ひな形・業務ノウハウをBoxクラウドで安全に共有</p>
+    </div>
+    <div class="icon-card">
+      <div class="icon">🌐</div>
+      <div class="label">オンライン集会所</div>
+      <p>メタバース空間を活用した非同期の情報交換・雑談の場。出席強制なし</p>
+    </div>
+    <div class="icon-card">
+      <div class="icon">📋</div>
+      <div class="label">情報掲示板</div>
+      <p>セミナー情報・各メンバーの得意分野紹介を掲載。紹介料なしの対等な情報共有</p>
+    </div>
+    <div class="icon-card">
+      <div class="icon">📅</div>
+      <div class="label">勉強会・情報交換会</div>
+      <p>定期的な勉強会と食事会。法改正・実務課題をテーマに対話形式で深掘り</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCHEDULE -->
+<section class="fade-in">
+  <div class="section-label">Schedule</div>
+  <h2>今後のスケジュール（予定）</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026.05.23</div>
+      <div class="tl-title">単位会総会にて告知・参加者募集開始</div>
+      <div class="tl-desc">興味ある先生へ個別打診</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026.06〜07</div>
+      <div class="tl-title">準備期間</div>
+      <div class="tl-desc">インフラ整備・加入資料の整備・ローンチフェロー確保（目標5名）</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026.08.01</div>
+      <div class="tl-title">新人向けオリエンテーション／スクール生募集</div>
+      <div class="tl-desc">アソシエイト募集（目標5名）</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--purple)"></div>
+      <div class="tl-date">2026.08〜</div>
+      <div class="tl-title">活動開始</div>
+      <div class="tl-desc">勉強会・情報共有ライブラリ・メタバース集会所の本格運用開始</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section fade-in">
+  <div class="cta-title">参加にご興味をお持ちの方へ</div>
+  <div class="cta-sub">氏名・行政書士番号・メールアドレスをフォームよりお知らせください。<br>企画段階のご案内です。正式な活動開始は2026年8月を予定しています。</div>
+  <a class="btn" href="https://forms.cloud.microsoft/Pages/DesignPageV2.aspx?prevorigin=shell&origin=NeoPortalPage&subpage=design&id=DCf7ZEvQbkeyNYSd9_U0p38Fy5LFkYBAuBuh5n0bmrZUNDFZOFFFNk04WkhRNlg2NlhBNDNYUkJXUC4u" target="_blank">
+    参加を申し込む →
+  </a>
+  <div class="cta-note">※ 本資料は企画段階のものです。内容は変更になる場合があります。</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>The Right Staff Alliance</div>
+  <div>発起人：栗田行政書士事務所　栗田 久徳</div>
+  <div>滋賀県行政書士会 大津支部</div>
+</footer>
+
+<script>
+// Fade in on scroll
+const els = document.querySelectorAll('.fade-in');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+els.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
